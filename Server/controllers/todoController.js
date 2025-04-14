@@ -3,7 +3,7 @@ export const getAllTodos = async (req,res,next)=>{
 }
 
 export const getTodoById = async (req,res,next)=>{
-  res.send(`get tody by id : ${req.params.id}`)
+  res.send(`get todo by id : ${req.params.id}`)
 }
 export const postCreateTodo = async (req,res,next)=>{
   res.send("created todo")
