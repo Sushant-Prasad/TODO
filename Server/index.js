@@ -30,20 +30,18 @@ app.use((err,req,res,next)=>{
   res.status(statusCode).json({error:message})//sending error response
 })
 //
-// const startServer = async () => {
-//   try {
-//     await connectToDB();
-//     console.log("✅ DB connected successfully!"); // <-- ADD THIS
+const startServer = async () => {
+  try {
+    await connectToDB();
+    console.log("✅ DB connected successfully!"); // <-- ADD THIS
 
-//     app.listen(PORT, () => {
-//       console.log(server is listening at http://localhost:${PORT});
-//     });
-//   } catch (error) {
-//     console.error("❌ Failed to start server:", error);
-//   }
-// };
-app.listen(PORT, () => {
-  console.log(`server is listening at http://localhost:${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`server is listening at http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+  }
+};
 
-// startServer();
+
+startServer();
