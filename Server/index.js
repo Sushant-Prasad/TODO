@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import dotenv from "dotenv";
 import authRouter from "./routes/authRouter.js";
 import todoRouter from "./routes/todoRouter.js"
 import bodyParser from "body-parser";
@@ -11,12 +10,11 @@ import {connectToDB} from "./utils/connect.js";
 dotenv.config(); // Load .env values
 
 const app = express();
-const PORT = 3000;
+const PORT =  3000;
 
 
 
 
-app.use(bodyParser.json())
 app.use(bodyParser.json())
 app.use("/api/user",authRouter);
 app.use("/api/todos",todoRouter)
@@ -32,20 +30,20 @@ app.use((err,req,res,next)=>{
   res.status(statusCode).json({error:message})//sending error response
 })
 //
-const startServer = async () => {
-  try {
-    await connectToDB();
-    console.log("✅ DB connected successfully!"); // <-- ADD THIS
+// const startServer = async () => {
+//   try {
+//     await connectToDB();
+//     console.log("✅ DB connected successfully!"); // <-- ADD THIS
 
-    app.listen(PORT, () => {
-      console.log(`server is listening at http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error("❌ Failed to start server:", error);
-  }
-};
+//     app.listen(PORT, () => {
+//       console.log(server is listening at http://localhost:${PORT});
+//     });
+//   } catch (error) {
+//     console.error("❌ Failed to start server:", error);
+//   }
+// };
 app.listen(PORT, () => {
-      console.log(`server is listening at http://localhost:${PORT}`);
-    });
+  console.log(`server is listening at http://localhost:${PORT}`);
+});
 
-startServer();
+// startServer();
