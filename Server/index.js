@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import dotenv from "dotenv";
 import authRouter from "./routes/authRouter.js";
 import todoRouter from "./routes/todoRouter.js"
 import bodyParser from "body-parser";
@@ -15,6 +16,7 @@ const PORT = 3000;
 
 
 
+app.use(bodyParser.json())
 app.use(bodyParser.json())
 app.use("/api/user",authRouter);
 app.use("/api/todos",todoRouter)
