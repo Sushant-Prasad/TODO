@@ -18,7 +18,7 @@ export const postRegisterUser = async (req, res, next) => {
   await connectToDB()
   const alreadyRegistered = await User.exists({email : data.email})
   if(alreadyRegistered){
-    return next(createError(400,"User already exists"))
+    return next(createError(400,"User already"))
   }
-  res.send("Register");
+  res.send("Register user");
 };

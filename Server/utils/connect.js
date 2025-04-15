@@ -16,10 +16,7 @@ export const connectToDB = async () => {
     }
 
     // Connect to MongoDB using URI from environment variable
-    const db = await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true, // Use new URL parser to handle special characters
-      useUnifiedTopology: true // Use new server discovery and monitoring engine
-    });
+    const db = await mongoose.connect(process.env.MONGO_URI);
 
     // Set connection status
     connection.isConnected = db.connections[0].readyState; // readyState values: 0 = disconnected, 1 = connected, 2 = connecting, 3 = disconnecting
@@ -30,3 +27,8 @@ export const connectToDB = async () => {
     console.log("Database connection failed:", error);
   }
 };
+// process.on("SIGINT", async () => {
+//   await mongoose.disconnect();
+//   console.log("MongoDB disconnected on app termination");
+//   process.exit(0);
+// });
