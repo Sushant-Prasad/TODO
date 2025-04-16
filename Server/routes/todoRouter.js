@@ -1,14 +1,28 @@
-import express from "express"
-import { deleteTodoById, getTodoById, getAllTodos, postCreateTodo, putUpdateTodo } from "../controllers/todoController.js"
+import express from "express";
+import {
+  deleteTodoById,
+  getTodoById,
+  getAllTodos,
+  postCreateTodo,
+  putUpdateTodo,
+} from "../controllers/todoController.js";
+import { verifyToken } from "../utils/verifytoken.js"; // Middleware to verify JWT
 
-const todoRouter = express.Router()
+const todoRouter = express.Router(); // Initialize a router for todo routes
 
+// Route to get all todos for the logged-in user
+todoRouter.get("/", verifyToken, getAllTodos);
 
-todoRouter.get("/",getAllTodos)
-todoRouter.get("/:id",getTodoById)
+// Route to get a specific todo by its ID
+todoRouter.get("/:id", verifyToken, getTodoById);
 
-todoRouter.post("/",postCreateTodo)
-todoRouter.put("/:id",putUpdateTodo )
-todoRouter.delete("/:id",deleteTodoById)
+// Route to create a new todo
+todoRouter.post("/", verifyToken, postCreateTodo);
 
-export default todoRouter;
+// Route to update a todo by its ID
+todoRouter.put("/:id", verifyToken, putUpdateTodo);
+
+// Route to delete a todo by its ID
+todoRouter.delete("/:id", verifyToken, deleteTodoById);
+
+export default todoRouter; // Export the router to use in index.js

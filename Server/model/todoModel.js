@@ -9,7 +9,7 @@ const todoSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: [true, "Email is required"],
+    required: [true, "Name is required"],
     trim: true, // removes leading/trailing spaces
   },
   isCompleted: {
