@@ -6,7 +6,9 @@ function App() {
 
   return (
     
-    <>home</>
+    <>
+    <h1>Home page</h1>
+    </>
   )
 }
 
