@@ -14,10 +14,11 @@ import EditIcon from "./icons/EditIcon";
 import EditTodo from "./EditTodo";
 
 const Todo = () => {
-  const [task, setTask] = useState("");
-  const [editId, setEditId] = useState(null);
-  const queryClient = useQueryClient();
+  const [task, setTask] = useState("");        // Input for new task
+  const [editId, setEditId] = useState(null);  // ID of task being edited
+  const queryClient = useQueryClient();        // Query client for invalidating cache
 
+  //Fetch all todos
   const {
     data: todos,
     isLoading,
@@ -28,6 +29,7 @@ const Todo = () => {
     queryFn: getAllTodos,
   });
 
+  // Mutation to add a todo
   const addMutation = useMutation({
     mutationFn: addTodo,
     onSuccess: () => {
@@ -40,6 +42,7 @@ const Todo = () => {
     },
   });
 
+  // Mutation to toggle complete status
   const toggleMutation = useMutation({
     mutationFn: ({ id, data }) => updateTodo(id, data),
     onSuccess: () => {
@@ -48,6 +51,7 @@ const Todo = () => {
     onError: () => toast.error("Failed to toggle status"),
   });
 
+  //Mutation to delete a todo
   const deleteMutation = useMutation({
     mutationFn: deleteTodoById,
     onSuccess: () => {
@@ -57,6 +61,7 @@ const Todo = () => {
     onError: () => toast.error("Failed to delete todo"),
   });
 
+  //Submit handler to add new todo
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!task.trim()) return toast.error("Task cannot be empty");
@@ -66,14 +71,13 @@ const Todo = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
+        {/* Header */}
         <div className="flex justify-center mb-4">
           <CircleUserRound size={40} className="text-[#07659f]" />
         </div>
+        <h1 className="text-2xl font-bold text-center text-[#07659f] mb-6">Todo App</h1>
 
-        <h1 className="text-2xl font-bold text-center text-[#07659f] mb-6">
-          Todo App
-        </h1>
-
+        {/* Add New Task Form */}
         <form onSubmit={handleSubmit} className="flex gap-3 mb-6">
           <input
             type="text"
@@ -91,33 +95,30 @@ const Todo = () => {
           </button>
         </form>
 
-        {isLoading && (
-          <p className="text-center text-gray-500">Loading todos...</p>
-        )}
-        {isError && (
-          <p className="text-center text-red-500">Error: {error.message}</p>
-        )}
+        {/* Loading or Error State */}
+        {isLoading && <p className="text-center text-gray-500">Loading todos...</p>}
+        {isError && <p className="text-center text-red-500">Error: {error.message}</p>}
 
+        {/* Todo List */}
         <ul className="space-y-2">
           {todos?.map((todo) => (
             <li
               key={todo._id}
               className="flex justify-between items-center bg-gray-50 p-3 rounded-lg border shadow-md"
             >
+              {/* If in edit mode, show edit input */}
               {editId === todo._id ? (
                 <EditTodo todo={todo} onCancel={() => setEditId(null)} />
               ) : (
                 <>
-                  <span
-                    className={`flex-1 ${
-                      todo.isCompleted ? "line-through text-gray-400" : ""
-                    }`}
-                  >
+                  {/* Task Text */}
+                  <span className={`flex-1 ${todo.isCompleted ? "line-through text-gray-400" : ""}`}>
                     {todo.name}
                   </span>
 
+                  {/* Action Buttons */}
                   <div className="flex gap-2 items-center">
-                    {/* Toggle */}
+                    {/* Toggle Complete */}
                     <button
                       onClick={() =>
                         toggleMutation.mutate({
@@ -137,7 +138,7 @@ const Todo = () => {
                       />
                     </button>
 
-                    {/* Edit */}
+                    {/* Edit Todo */}
                     <button
                       onClick={() => setEditId(todo._id)}
                       title="Edit"
@@ -146,7 +147,7 @@ const Todo = () => {
                       <EditIcon />
                     </button>
 
-                    {/* Delete */}
+                    {/* Delete Todo */}
                     <button
                       onClick={() => deleteMutation.mutate(todo._id)}
                       title="Delete"
