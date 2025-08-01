@@ -27,8 +27,4 @@ export const connectToDB = async () => {
     console.log("Database connection failed:", error);
   }
 };
-// process.on("SIGINT", async () => {
-//   await mongoose.disconnect();
-//   console.log("MongoDB disconnected on app termination");
-//   process.exit(0);
-// });
+
